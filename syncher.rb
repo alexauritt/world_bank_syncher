@@ -21,18 +21,18 @@ def do_it
 end
 
 def execute_multiple_queries(query)
-  puts "running query sequence..."
+  # puts "running query sequence..."
   scheduler = QueryScheduler.new(query)
-  puts "#{scheduler.total_queries} scheduled..."
+  # puts "#{scheduler.total_queries} scheduled..."
   query.per_page(MAXIMUM_BUFFER_SIZE)
   results = []
   scheduler.total_queries.times do |i|
-    puts "beginning query #{i}"
+    puts "beginning query #{i+1}"
     res = query.page(i+1).fetch
-    puts "here are resss #{res}"
     results << res
-    # puts "query #{1} finished, results now contains #{results.size} elements"
   end
+  
+  # puts "Queries finished and we have #{results.size} results"
 end
 
 def fetch_all_data
