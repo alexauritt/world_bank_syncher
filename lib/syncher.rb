@@ -56,4 +56,4 @@ class QueryScheduler
 end
 
 
-do_it
+# do_it
