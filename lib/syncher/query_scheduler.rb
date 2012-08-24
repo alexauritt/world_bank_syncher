@@ -18,7 +18,7 @@ class QueryScheduler
   private
   def total_queries
     query.fetch unless query.total
-    (query.total / MAXIMUM_BUFFER_SIZE.to_f).ceil
+    (query.total / Syncher::MAXIMUM_BUFFER_SIZE.to_f).ceil
   end
 
   def results=(results)

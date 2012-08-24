@@ -2,8 +2,12 @@ require 'world_bank'
 require 'syncher/query_scheduler'
 
 CURRENT_INDICATOR = 'SP.POP.TOTL'
-MAXIMUM_BUFFER_SIZE = 500
-DEFAULT_INITIAL_BUFFER_SIZE = 50
+
+module Syncher
+  CURRENT_INDICATOR = 'SP.POP.TOTL'
+  MAXIMUM_BUFFER_SIZE = 500
+  DEFAULT_INITIAL_BUFFER_SIZE = 50  
+end
 
 
 def do_it
@@ -12,9 +16,9 @@ def do_it
   data = query.fetch
   available_data_count = query.total
   puts "There are #{available_data_count} pieces of data available"
-  if available_data_count > MAXIMUM_BUFFER_SIZE
+  if available_data_count > Syncher::MAXIMUM_BUFFER_SIZE
     execute_multiple_queries(query)
-  elsif available_data_count > DEFAULT_INITIAL_BUFFER_SIZE
+  elsif available_data_count > Syncher::DEFAULT_INITIAL_BUFFER_SIZE
     fetch_all_data
   else
     complete
@@ -22,9 +26,8 @@ def do_it
 end
 
 def execute_multiple_queries(query)
-
   scheduler = QueryScheduler.new(query)
-  query.per_page(MAXIMUM_BUFFER_SIZE)
+  query.per_page(Syncher::MAXIMUM_BUFFER_SIZE)
   results = scheduler.execute!
 end
 
