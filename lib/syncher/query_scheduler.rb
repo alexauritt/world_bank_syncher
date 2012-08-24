@@ -9,9 +9,10 @@ class QueryScheduler
   def execute!
     total_queries.times do |i|
       res = query.page(i+1).fetch
+      return nil if res.nil?
       results << res
     end
-
+    results
   end
   
   private

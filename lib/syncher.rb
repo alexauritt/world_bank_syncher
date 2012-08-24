@@ -22,13 +22,10 @@ def do_it
 end
 
 def execute_multiple_queries(query)
-  # puts "running query sequence..."
+
   scheduler = QueryScheduler.new(query)
-  # puts "#{scheduler.total_queries} scheduled..."
   query.per_page(MAXIMUM_BUFFER_SIZE)
   results = scheduler.execute!
-  
-  # puts "Queries finished and we have #{results.size} results"
 end
 
 def fetch_all_data
