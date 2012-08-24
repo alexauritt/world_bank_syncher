@@ -1,4 +1,5 @@
 require 'world_bank'
+require 'syncher/query_scheduler'
 
 CURRENT_INDICATOR = 'SP.POP.TOTL'
 MAXIMUM_BUFFER_SIZE = 500
@@ -25,12 +26,7 @@ def execute_multiple_queries(query)
   scheduler = QueryScheduler.new(query)
   # puts "#{scheduler.total_queries} scheduled..."
   query.per_page(MAXIMUM_BUFFER_SIZE)
-  results = []
-  scheduler.total_queries.times do |i|
-    puts "beginning query #{i+1}"
-    res = query.page(i+1).fetch
-    results << res
-  end
+  results = scheduler.execute!
   
   # puts "Queries finished and we have #{results.size} results"
 end
@@ -41,18 +37,6 @@ end
 
 def complete
   puts "Data fetch complete."
-end
-
-class QueryScheduler
-  attr_reader :query
-  
-  def initialize(query)
-    @query = query
-  end
-  
-  def total_queries
-    (query.total / MAXIMUM_BUFFER_SIZE.to_f).ceil
-  end
 end
 
 
