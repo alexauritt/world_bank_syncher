@@ -1,7 +1,7 @@
 require 'world_bank'
 
 module Syncher
-  class SynchJob
+  class Job
     def do_it
       puts "about to make wb api call..."
       query = WorldBank::Data.country('all').indicator(Syncher::CURRENT_INDICATOR)
