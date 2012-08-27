@@ -1,5 +1,5 @@
 require 'world_bank'
-require 'syncher/synch_job'
+require 'syncher/job'
 require 'syncher/query_scheduler'
 
 module Syncher
