@@ -6,14 +6,6 @@ module Syncher
       puts "about to make wb api call..."
       query = WorldBank::Data.country('all').indicator(Syncher::CURRENT_INDICATOR)
       fetch_all_data query
-      # data = query.fetch
-      # available_data_count = query.total
-      # puts "There are #{available_data_count} pieces of data available"
-      # if available_data_count > Syncher::DEFAULT_INITIAL_BUFFER_SIZE
-      #   fetch_all_data(query)
-      # else
-      #   complete
-      # end
     end
 
     private
@@ -21,11 +13,13 @@ module Syncher
       scheduler = Syncher::QueryScheduler.new(query)
       query.per_page(Syncher::MAXIMUM_BUFFER_SIZE)
       results = scheduler.execute!
-      if results
-        puts "results returned"
+      if results.nil?
+        # puts "no results returned"
+        results
       else
         checksum = Digest::MD5.hexdigest Marshal.dump(results)
-        puts "results returned, with checksum: #{checksum}"
+        # puts "results returned, with checksum: #{checksum}"
+        [results, checksum]
       end
     end
 
