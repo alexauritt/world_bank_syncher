@@ -8,7 +8,9 @@ class QueryScheduler
     
   def execute!
     total_queries.times do |i|
+      puts "About to execute query #{i+1}"
       res = query.page(i+1).fetch
+      puts "query #{i+1} returned "
       return nil if res.nil?
       results << res
     end
