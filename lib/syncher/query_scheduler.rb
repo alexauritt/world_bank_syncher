@@ -9,13 +9,15 @@ module Syncher
     
     def execute!
       begin
+        query.per_page(Syncher::MAXIMUM_BUFFER_SIZE)
         total_queries.times do |i|
           puts "About to execute query #{i+1}"
           res = query.page(i+1).fetch
           puts "query #{i+1} returned "
           return nil if res.nil?
-          results << res
+          results.concat res
         end
+        puts "here are results #{results}"
         results
       rescue
         nil
@@ -24,7 +26,7 @@ module Syncher
   
     private
     def total_queries
-      query.fetch unless query.total
+      query.per_page(1).fetch unless query.total
       (query.total / Syncher::MAXIMUM_BUFFER_SIZE.to_f).ceil
     end
 

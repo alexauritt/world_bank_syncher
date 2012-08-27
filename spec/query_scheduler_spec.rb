@@ -47,5 +47,13 @@ describe Syncher::QueryScheduler do
     scheduler.execute!
   end
   
+  it "execute should return single array of data" do
+    query.should_receive(:fetch).twice.and_return(fake_results)
+    query.stub(:total).and_return(Syncher::MAXIMUM_BUFFER_SIZE + 1)
+    
+    results = scheduler.execute!
+    results.should eq([:some, :stuff, :goes, :here, :some, :stuff, :goes, :here])
+  end
+  
   
 end

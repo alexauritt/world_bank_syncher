@@ -22,18 +22,11 @@ module Syncher
       query.per_page(Syncher::MAXIMUM_BUFFER_SIZE)
       @results = scheduler.execute!
       if results.nil?
-        # puts "no results returned"
         @results
       else
-        puts "here are results #{@results}"
         @checksum = Digest::MD5.hexdigest Marshal.dump(@results)
-        # puts "results returned, with checksum: #{checksum}"
         {:results => @results, :checksum => @checksum}
       end
-    end
-
-    def complete
-      puts "Data fetch complete."
     end
   end
 end
