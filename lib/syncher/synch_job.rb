@@ -5,14 +5,15 @@ module Syncher
     def do_it
       puts "about to make wb api call..."
       query = WorldBank::Data.country('all').indicator(Syncher::CURRENT_INDICATOR)
-      data = query.fetch
-      available_data_count = query.total
-      puts "There are #{available_data_count} pieces of data available"
-      if available_data_count > Syncher::DEFAULT_INITIAL_BUFFER_SIZE
-        fetch_all_data(query)
-      else
-        complete
-      end
+      fetch_all_data query
+      # data = query.fetch
+      # available_data_count = query.total
+      # puts "There are #{available_data_count} pieces of data available"
+      # if available_data_count > Syncher::DEFAULT_INITIAL_BUFFER_SIZE
+      #   fetch_all_data(query)
+      # else
+      #   complete
+      # end
     end
 
     private
