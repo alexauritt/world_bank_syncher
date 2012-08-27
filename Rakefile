@@ -6,5 +6,5 @@ task :test => :spec
 task :default => :spec
 
 task :queries do
-  puts Syncher::Job.new.do_it ? "QUERY SUCCESSFUL!" : "QUERY FAILURE!!!!!!!!!!"
+  puts Syncher::Job.new('SP.POP.TOTL').fetch ? "QUERY SUCCESSFUL!" : "QUERY FAILURE!!!!!!!!!!"
 end
