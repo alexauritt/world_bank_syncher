@@ -1,9 +1,9 @@
 require 'helper'
 require 'world_bank'
 
-describe QueryScheduler do
+describe Syncher::QueryScheduler do
   let(:query) { WorldBank::Data.country('all').indicator('SP.POP.TOTL') }
-  let(:scheduler) { QueryScheduler.new(query) }
+  let(:scheduler) { Syncher::QueryScheduler.new(query) }
   let(:fake_results) { [:some, :stuff, :goes, :here] }
 
   before do

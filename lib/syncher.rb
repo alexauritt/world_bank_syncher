@@ -22,7 +22,7 @@ module Syncher
     end
 
     def self.fetch_all_data(query)
-      scheduler = QueryScheduler.new(query)
+      scheduler = Syncher::QueryScheduler.new(query)
       query.per_page(Syncher::MAXIMUM_BUFFER_SIZE)
       results = scheduler.execute!
       if results
