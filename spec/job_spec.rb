@@ -2,6 +2,9 @@ require 'helper'
 
 describe Syncher::Job do
   let(:indicator_string) { 'SP.POP.TOTL' }
+  before do
+    Syncher::DataParser.stub(:parse).and_return(:something)
+  end
   context 'fetch' do
     it "should return nil if query shceduler returns nil" do
       WorldBank::DataQuery.any_instance.stub(:total).and_return(39)
@@ -36,17 +39,13 @@ describe Syncher::Job do
     end
     
     it "should return unique checksums given unique results" do
-      scheduler1 = Object.new
-      scheduler2 = Object.new
-      scheduler1.stub(:execute!).and_return(:something_else)
-      scheduler2.stub(:execute!).and_return(:something)
-      
-      WorldBank::DataQuery.any_instance.stub(:total).and_return(39)
-      Syncher::QueryScheduler.should_receive(:new).twice.and_return(scheduler1, scheduler2)
 
+      Syncher::DataParser.should_receive(:parse).twice.and_return(:something, :something_else)
+      WorldBank::DataQuery.any_instance.stub(:total).and_return(39)
+      Syncher::QueryScheduler.any_instance.stub(:execute!).and_return(:some_stuff)
 
       job = Syncher::Job.new indicator_string
-      second_job = Syncher::Job.new indicator_string
+      second_job = Syncher::Job.new 'different string'
       first = job.fetch[:checksum]
       second = second_job.fetch[:checksum]
       first.should_not eq(second)      

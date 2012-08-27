@@ -11,13 +11,10 @@ module Syncher
       begin
         query.per_page(Syncher::MAXIMUM_BUFFER_SIZE)
         total_queries.times do |i|
-          puts "About to execute query #{i+1}"
           res = query.page(i+1).fetch
-          puts "query #{i+1} returned "
           return nil if res.nil?
           results.concat res
         end
-        puts "here are results #{results}"
         results
       rescue
         nil
