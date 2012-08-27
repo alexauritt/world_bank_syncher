@@ -1,6 +1,6 @@
 module Syncher
   class SynchJob
-    def self.do_it
+    def do_it
       puts "about to make wb api call..."
       query = WorldBank::Data.country('all').indicator(CURRENT_INDICATOR)
       data = query.fetch
@@ -13,7 +13,8 @@ module Syncher
       end
     end
 
-    def self.fetch_all_data(query)
+    private
+    def fetch_all_data(query)
       scheduler = Syncher::QueryScheduler.new(query)
       query.per_page(Syncher::MAXIMUM_BUFFER_SIZE)
       results = scheduler.execute!
@@ -25,7 +26,7 @@ module Syncher
       end
     end
 
-    def self.complete
+    def complete
       puts "Data fetch complete."
     end
   end

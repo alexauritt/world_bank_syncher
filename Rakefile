@@ -6,5 +6,5 @@ task :test => :spec
 task :default => :spec
 
 task :queries do
-  Syncher::SynchJob.do_it
+  Syncher::SynchJob.new.do_it
 end
