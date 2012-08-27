@@ -25,9 +25,10 @@ module Syncher
         # puts "no results returned"
         @results
       else
-        @checksum = Digest::MD5.hexdigest Marshal.dump(results)
+        puts "here are results #{@results}"
+        @checksum = Digest::MD5.hexdigest Marshal.dump(@results)
         # puts "results returned, with checksum: #{checksum}"
-        [@results, @checksum]
+        {:results => @results, :checksum => @checksum}
       end
     end
 
