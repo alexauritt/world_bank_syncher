@@ -1,8 +1,10 @@
+require 'world_bank'
+
 module Syncher
   class SynchJob
     def do_it
       puts "about to make wb api call..."
-      query = WorldBank::Data.country('all').indicator(CURRENT_INDICATOR)
+      query = WorldBank::Data.country('all').indicator(Syncher::CURRENT_INDICATOR)
       data = query.fetch
       available_data_count = query.total
       puts "There are #{available_data_count} pieces of data available"

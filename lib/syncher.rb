@@ -2,8 +2,6 @@ require 'world_bank'
 require 'syncher/synch_job'
 require 'syncher/query_scheduler'
 
-CURRENT_INDICATOR = 'SP.POP.TOTL'
-
 module Syncher
   CURRENT_INDICATOR = 'SP.POP.TOTL'
   MAXIMUM_BUFFER_SIZE = 500
